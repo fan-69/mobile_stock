@@ -1,0 +1,230 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Мобильный склад</title>
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-title" content="Мобильный склад">
+        
+        <link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css">
+        <link rel="stylesheet" href="css/jquery-ui.min.css">
+		<link rel="stylesheet" href="css/main.css">
+        <link rel="icon" href="css/images/MobileStock.ico" type="image/x-icon">
+        
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery.mobile-1.4.5.min.js"></script>
+        <script src="js/app.js"></script>
+        <script src="js/push.min.js"></script>
+        
+    </head>
+
+    <body>
+        <!--Страница заставки-->
+        <div data-role="page" id="splash_page">
+            <div data-role="header" data-position="fixed">
+                <h6>Мобильный склад</h6>
+            </div>
+            <img src="css/images/MobileStock.png" id="screen_img" alt='Программа "Мобильный склад"' class="center-img">
+            <div class="ui-footer-fixed" data-role="footer">              
+	            <h6>Программа создана @Frolov Aleksey</h6>
+            </div>
+        </div>
+        
+        <!--Страница отправки и получения данных в из 1С-->
+        <div data-role="page" id="post_1c">
+            <!--Боковая панель-->
+            <div data-role="panel" data-position-fixed="true">
+                <a href="#scan_page" class="ui-btn ui-corner-all ui-icon-camera ui-btn-icon-left">Сканер</a>
+                <a href="#settings" class="ui-btn ui-corner-all ui-icon-gear ui-btn-icon-left">Настройки</a>
+                <a href="#info" class="ui-btn ui-corner-all ui-icon-info ui-btn-icon-left">Информация</a>
+            </div>    
+            <div data-role="header" data-position="fixed">
+                <a href="#" class="ui-btn ui-btn-icon-notext ui-icon-bars ui-corner-all menu"></a>
+                <h6>Обмен с 1С</h6>
+            </div>
+            <div data-role="content">
+                <form id="set_data">
+                    <label for="set_reg_0a">Ввод новой номенклатуры</label>
+                    <input type="radio" name="set_reg_0" id="set_reg_0a">
+                    <label for="set_reg_0b">Получение данных номенклатуры</label>
+                    <input type="radio" name="set_reg_0" id="set_reg_0b">
+                </form>
+                <label for="name_product">Наименование номенклатуры</label>
+                <input type="text" id="name_product" disabled="disabled" placeholder="Введите наименование" value="">
+                <a href="#scan_page" class="ui-btn ui-corner-all">Сканировать</a>
+                <div id="rec_data"></div>
+            </div>
+            <div class="ui-footer-fixed" data-role="footer">              
+	            <h6>Программа создана @Frolov Aleksey</h6>
+            </div>
+        </div>
+        
+        <!--Страница работы со сканером-->
+        <div data-role="page" id="scan_page">
+            <!--Боковая панель-->
+            <div data-role="panel" data-position-fixed="true">
+                <a href="#post_1c" class="ui-btn ui-corner-all ui-icon-action ui-btn-icon-left">Обмен с 1С</a>
+                <a href="#settings" class="ui-btn ui-corner-all ui-icon-gear ui-btn-icon-left">Настройки</a>
+                <a href="#info" class="ui-btn ui-corner-all ui-icon-info ui-btn-icon-left">Информация</a>
+            </div>
+            <div data-role="header" data-position="fixed">
+                <a href="#" class="ui-btn ui-btn-icon-notext ui-icon-bars ui-corner-all menu"></a>
+                <h6>СКАНЕР</h6>
+            </div>
+            <div data-role="content">
+                <div>
+					<label for="camera-select" class="select">Выбор камеры:</label>
+                    <select id="camera-select"></select>
+                    <canvas width="320" height="240" id="webcodecam-canvas" class="center-cam"></canvas>
+                    <form>
+                        <input id="zoom" type="range" min="1" max="3" step=".1" value="1.2">
+                    </form>
+                </div>
+                <p id="scanned-QR"></p>
+                
+                <button id="scan">СКАНИРОВАТЬ</button>
+                
+                <script src="js/qrcodelib.js"></script>
+                <script src="js/webcodecamjs.js"></script>
+                <script src="js/main.js"></script>
+            
+            </div>
+            <div class="ui-footer-fixed" data-role="footer">              
+	            <h6>Программа создана @Frolov Aleksey</h6>
+            </div>
+        </div>
+        
+        <!--Страница настроек программы-->
+        <div data-role="page" id="settings">
+            <!--Боковая панель-->
+            <div data-role="panel" data-position-fixed="true">
+                <a href="#post_1c" class="ui-btn ui-corner-all ui-icon-action ui-btn-icon-left">Обмен с 1С</a>
+                <a href="#scan_page" class="ui-btn ui-corner-all ui-icon-camera ui-btn-icon-left">Сканер</a>
+                <a href="#info" class="ui-btn ui-corner-all ui-icon-info ui-btn-icon-left">Информация</a>
+            </div>
+            <div data-role="header" data-position="fixed">
+                <a href="#" class="ui-btn ui-btn-icon-notext ui-icon-bars ui-corner-all menu"></a>
+                <h6>Настройки</h6>
+            </div>
+            <div data-role="content">
+                <form id="setting">
+                    <label for="serv">Адрес сервера 1С:</label>
+                    <input id="serv" type="text" value="">
+                    <label for="request_quantity">Спрашивать количество</label>
+                    <input type="checkbox" name="request_quantity" id="request_quantity">
+                    
+                </form>
+                <button id="save_settings">Сохранить настройки</button>
+                <button id="get_settings">Получить настройки</button>
+            </div>    
+            <div class="ui-footer-fixed" data-role="footer">              
+	            <h6>Программа создана @Frolov Aleksey</h6>
+            </div>
+        </div>    
+        
+        <!--Страница информации-->
+         <div data-role="page" id="info">
+            <!--Боковая панель-->
+            <div data-role="panel" data-position-fixed="true">
+                <a href="#post_1c" class="ui-btn ui-corner-all ui-icon-action ui-btn-icon-left">Обмен с 1С</a>
+                <a href="#scan_page" class="ui-btn ui-corner-all ui-icon-camera ui-btn-icon-left">Сканер</a>
+                <a href="#settings" class="ui-btn ui-corner-all ui-icon-gear ui-btn-icon-left">Настройки</a>
+            </div>
+            <div data-role="header" data-position="fixed">
+                <a href="#" class="ui-btn ui-btn-icon-notext ui-icon-bars ui-corner-all menu"></a>
+                <h6>Настройки</h6>
+            </div>
+            <div data-role="content">
+                <p>Здесь будет описание работы программы. Её настроек. И всего прочего...
+                </p>
+            </div>    
+            <div class="ui-footer-fixed" data-role="footer">              
+	            <h6>Программа создана @Frolov Aleksey</h6>
+            </div>
+        </div>
+        
+        <script>
+            // после загрузки всего приложения вешаем событие на ползунок zuma камеры
+            window.onload=function(){
+                $('#zoom').on("slidestop", function( event, ui ){
+                    Page.changeZoom(event.target.value);
+                });     
+            };
+            
+            // при открытии страницы с заставкой через 1 сек переходим на следующую станицу
+            $('#splash_page').on('pageshow',function(event){
+				var  img=$('#screen_img');
+				if(window.screen.height>window.screen.width){
+					img.attr('width',window.screen.width+'px');
+				}
+				else{
+					img.attr('height',(window.screen.height-100)+'px');
+				}
+                setTimeout(function(){
+                    document.location.href='#post_1c';
+                },1000);
+            });  
+            
+            // вешаем событие на кнопку открытия меню
+            $('.menu').on('click',function(event,ui){
+                $(location.hash+' [data-role="panel"]').panel('open');
+            });
+            
+            // переход по истории открытия страниц свайпами
+            // это в право
+            $('[data-role="page"]').not('.ui-slider').on('swiperight',function(event,ui){
+                history.go(-1);
+            });
+            // это в лево
+            $('[data-role="page"]').not('.ui-slider').on('swipeleft',function(event,ui){
+                history.go(1);
+            });
+            
+            // сохранение настроек в хранилище
+            $('#save_settings').on('click',function(event,ui){
+                let d={};
+                // в начале получаем данные и текстовых полей
+                $('#setting input[type=text]').each(function(i){
+                    let el=$(this);
+                    d[el.attr('id')]=el.val();
+                });
+                // потом получаем данные переключателей
+                $('#setting input[type=checkbox]').each(function(i){
+                    let el=$(this);
+                    d[el.attr('id')]=el.is(':checked');
+                });
+                // могут быть еще другие типы
+                
+                // теперь сохраняем данные
+                localStorage.setItem('setting',JSON.stringify(d));
+            });
+            
+            // получаем сохраненные настройки
+            $('#get_settings').on('click',function(event,ui){
+                if(localStorage.getItem('setting')){
+                    let d=JSON.parse(localStorage.getItem('setting'));
+                    for(let key in d){
+                        if($('#'+key).attr('type')==='checkbox'){
+                            $('#'+key).attr('data-cacheval',d[key]);
+                        }
+                        else{
+                            $('#'+key).val(d[key]);
+                        }
+                    }
+                }
+            });
+            
+            // вешаем событие на изменение радио кнопки (Ввод новой номенклатуры)
+            $('#set_reg_0a').on('click',function(event,ui){
+                $('#name_product').textinput("enable");
+            });
+            // вешаем событие на изменение радио кнопки (Получение данных номенклатуры)
+            $('#set_reg_0b').on('click',function(event,ui){
+                $('#name_product').textinput("disable");
+            });
+            
+        </script>
+    </body>
+</html>
