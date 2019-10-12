@@ -1,0 +1,14 @@
+
+.center-img {
+	position: absolute;
+	display: block;
+	margin: auto;
+	left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+}
+.center-cam{
+	display: block;
+	margin: auto;
+}
